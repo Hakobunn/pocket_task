@@ -3,61 +3,69 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
 class NotifyHelper {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
   FlutterLocalNotificationsPlugin();
 
-   /*initializeNotification() async {
-     //tz.initializeTimeZones();
-     // this is for latest iOS settings
-     final DarwinInitializationSettings initializationSettingsIOS =
-     DarwinInitializationSettings(
-         requestSoundPermission: false,
-         requestBadgePermission: false,
-         requestAlertPermission: false,
-         onDidReceiveLocalNotification: onDidReceiveLocalNotification
-     );
+  final AndroidInitializationSettings _androidInitializationSettings =
+  const AndroidInitializationSettings('appicon');
 
-     final AndroidInitializationSettings initializationSettingsAndroid =
-         AndroidInitializationSettings("appicon");
+  void initialiseNotifications() async {
+    InitializationSettings initializationSettings = InitializationSettings(
+      android: _androidInitializationSettings,
+    );
 
-       final InitializationSettings initializationSettings =
-       InitializationSettings(
-       iOS: initializationSettingsIOS,
-       android:initializationSettingsAndroid,
-     );
+    await _flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
+    const AndroidNotificationDetails androidNotificationDetails =
+    AndroidNotificationDetails(
+      'channelId',
+      'channelName',
+      importance: Importance.max,
+      playSound: true,
+    );
 
-     await flutterLocalNotificationsPlugin.initialize(
-         initializationSettings,
-         onDidReceiveNotificationResponse: selectNotification
-     );
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+    );
 
-   }
+    AndroidFlutterLocalNotificationsPlugin? platformSpecific =
+    _flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
 
-   void requestIOSPermissions() {
-     flutterLocalNotificationsPlugin
-         .resolvePlatformSpecificImplementation<
-         IOSFlutterLocalNotificationsPlugin>()
-         ?.requestPermissions(
-       alert: true,
-       badge: true,
-       sound: true,
-     );
-   }
+    if (platformSpecific != null) {
+      const AndroidNotificationChannel channel = AndroidNotificationChannel(
+        'channelId',
+        'channelName',
+        description: 'channelDescription',
+        importance: Importance.max,
+        playSound: true,
+      );
+      await platformSpecific.createNotificationChannel(channel);
+    }
+  }
 
-   Future selectNotification(String? payload) async {
-     if (payload != null) {
-       print('notification payload: $payload');
-     } else {
-       print('Notification Done');
-     }
-     Get.to(() => Container(color: Colors.white));
-   }
+  Future<void> sendNotification(String title, String body) async {
+    const int notificationId = 0;
 
+    const AndroidNotificationDetails androidNotificationDetails =
+    AndroidNotificationDetails(
+      'channelId',
+      'channelName',
+      importance: Importance.max,
+      priority: Priority.high,
+      playSound: true,
+    );
 
-   Future<dynamic> onDidReceiveLocalNotification(
-       int id, String? title, String? body, String? payload) async {
-     Get.dialog(const Text("Welcome to flutter"));
-   }*/
+    const NotificationDetails notificationDetails = NotificationDetails(
+      android: androidNotificationDetails,
+    );
+
+    await _flutterLocalNotificationsPlugin.show(
+      notificationId,
+      title,
+      body,
+      notificationDetails,
+    );
+  }
 }
-

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pocket_task/home.dart';
 import '../model/todo.dart';
 import '../constants/colors.dart';
 
@@ -18,7 +17,7 @@ class ToDoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 5),
       child: ListTile(
         onTap: () {
           // print('Clicked on Todo Item.');
@@ -43,7 +42,7 @@ class ToDoItem extends StatelessWidget {
         ),
         trailing: Container(
           padding: const EdgeInsets.all(0),
-          margin: const EdgeInsets.symmetric(vertical: 12),
+          margin: const EdgeInsets.symmetric(vertical: 10),
           height: 35,
           width: 35,
           decoration: BoxDecoration(
@@ -53,9 +52,8 @@ class ToDoItem extends StatelessWidget {
           child: IconButton(
             color: Colors.black,
             iconSize: 25,
-            icon: const Icon(Icons.delete),
+            icon: const Icon(Icons.delete_outline),
             onPressed: () {
-              // print('Clicked on delete icon');
               onDeleteItem(todo.id);
             },
           ),

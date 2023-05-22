@@ -16,6 +16,8 @@ class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -44,16 +46,16 @@ class InputField extends StatelessWidget {
                 autofocus: false,
                 cursorColor: Colors.black,
                 controller: controller,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: tdBlack,
+                  color: isDarkMode ? Colors.white :tdBlack,
                   fontWeight: FontWeight.w400
                 ),
                 decoration: InputDecoration(
                   hintText: hint,
                   hintStyle: TextStyle(
                       fontSize: 14,
-                      color: tdBlack.withOpacity(0.5),
+                      color: isDarkMode ? Colors.white.withOpacity(0.3) : tdBlack.withOpacity(0.5),
                       fontWeight: FontWeight.w500
                   ),
                   focusedBorder: const UnderlineInputBorder(

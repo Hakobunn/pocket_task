@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pocket_task/tutorials.dart';
+import 'package:pocket_task/dashboard.dart';
 import 'package:pocket_task/constants/colors.dart';
 import 'package:pocket_task/signup.dart';
 
@@ -11,10 +11,10 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         leading: IconButton(
           onPressed: (){
             Navigator.pop(context);
@@ -52,8 +52,8 @@ class LoginPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Column(
                     children: <Widget>[
-                      inputFile(label: "Email"),
-                      inputFile(label: "Password",obscureText: true)
+                      inputFile(label: "Email",context: context),
+                      inputFile(label: "Password",obscureText: true,context: context)
                     ],
                   ),
                   ),
@@ -76,7 +76,8 @@ class LoginPage extends StatelessWidget {
                         minWidth: double.infinity,
                         height: 50,
                         onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> TutorialPage()));
+                          Navigator.push(context, MaterialPageRoute(builder:
+                              (context)=> const Dashboard()));
                         },
                         color: tdNavyBlue,
                         //color: const Color(0xFF00BFA6),
@@ -119,17 +120,6 @@ class LoginPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                /*Container(
-                  padding: const EdgeInsets.only(top: 10),
-                  height: 260,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/security.png"),
-                      fit: BoxFit.fitHeight
-                    ),
-                  ),
-
-                  )*/
 
               ],
             ))
@@ -141,19 +131,19 @@ class LoginPage extends StatelessWidget {
 }
 
 //creating a widget for text field
-Widget inputFile({label,obscureText=false})
-{
+Widget inputFile({label, obscureText = false, required BuildContext context}) {
+  final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       Text(
         label,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w600,
-          color: Colors.black87
+          color: isDarkMode ? Colors.white : Colors.black87,
         ),
-
       ),
       const SizedBox(
         height: 5,
@@ -161,20 +151,16 @@ Widget inputFile({label,obscureText=false})
       TextField(
         obscureText: obscureText,
         decoration: const InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0,
-          horizontal: 10),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Colors.grey
-            ),
-
+            borderSide: BorderSide(color: Colors.grey),
           ),
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey)
-          )
+            borderSide: BorderSide(color: Colors.grey),
+          ),
         ),
       ),
-      const SizedBox(height: 10,)
+      const SizedBox(height: 10),
     ],
   );
 }

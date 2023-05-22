@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pocket_task/dashboard.dart';
 import 'model/todo.dart';
 import 'constants/colors.dart';
 import 'widgets/todo_item.dart';
@@ -25,8 +24,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: tdBGColor,
-      appBar: _buildAppBar(),
+      //backgroundColor: tdBGColor,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      ),
       body: Stack(
         children: [
           Container(
@@ -42,13 +44,13 @@ class _HomeState extends State<Home> {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(
-                          top: 50,
+                          top: 30,
                           bottom: 20,
                         ),
                         child: const Text(
-                          'All ToDos',
+                          'Checklist',
                           style: TextStyle(
-                            fontSize: 30,
+                            fontSize: 25,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -115,7 +117,7 @@ class _HomeState extends State<Home> {
                     _addToDoItem(_todoController.text);
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: tdGreen,
+                    primary: tdNavyBlue,
                     minimumSize: const Size(60, 60),
                     elevation: 10,
                   ),
@@ -203,22 +205,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      backgroundColor: tdBGColor,
-      elevation: 0,
-      title: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        IconButton(
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> const Dashboard()));
-          },
-          icon: const Icon(Icons.close,
-            size:40,
-            color: Colors.black,),
-
-        ),
-      ]),
-    );
   }
-}

@@ -4,8 +4,7 @@ import 'package:pocket_task/tutorials/tutorial1.dart';
 import 'package:pocket_task/tutorials/tutorial2.dart';
 import 'package:pocket_task/tutorials/tutorial3.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-//import 'package:pocket_task/profile.dart';
-import 'package:pocket_task/home.dart';
+
 
 class TutorialPage extends StatelessWidget {
 
@@ -15,12 +14,10 @@ class TutorialPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        //ignore: deprecated_member_use
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         leading: IconButton(
           onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> const Dashboard()));

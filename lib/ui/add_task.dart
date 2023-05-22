@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:pocket_task/constants/colors.dart';
+import 'package:pocket_task/controllers/task_controller.dart';
+import 'package:pocket_task/models/task.dart';
 import 'package:pocket_task/ui/button.dart';
 import 'package:pocket_task/ui/input_field.dart';
+import 'package:pocket_task/controllers/task_controller.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({Key? key}) : super(key: key);
@@ -13,6 +16,7 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+   final TaskController _taskController = Get.put(TaskController());
    final TextEditingController _titleController = TextEditingController();
    final TextEditingController _noteController = TextEditingController();
    DateTime _selectedDate = DateTime.now();
@@ -31,12 +35,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        // ignore: deprecated_member_use
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         leading: IconButton(
           onPressed: (){
             Navigator.pop(context);
@@ -47,7 +49,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         ),
       ),
       body: Container(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20,top: 20),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,10 +90,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   width: 150, // Adjust the width value as per your requirement
                   child: Button(
                     label: "Create Task",
-                    onTap: _validateTask,
+                    onTap: ()=> _validateTask()),
                   ),
                 ),
-              ),
             ],
           ),
         ),
@@ -102,9 +103,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
    _validateTask() {
      if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
        // Add code to save the task to the database
-
+       _addTaskToDb();
        // Show success notification
-       _showNotification("Task created successfully");
+       //_showNotification("Task created successfully");
 
        // Navigate back
        Get.back();
@@ -128,6 +129,19 @@ class _AddTaskPageState extends State<AddTaskPage> {
        backgroundColor: Colors.white,
        colorText: tdBlack,
      );
+   }
+
+   _addTaskToDb() async {
+    int value =await _taskController.addTask(
+        task:Task(
+          note: _noteController.text,
+          title: _titleController.text,
+          date: DateFormat.yMd().format(_selectedDate),
+          color: _selectedColor,
+          isCompleted: 0,
+        )
+    );
+    print("My id is "+ "$value");
    }
 
 

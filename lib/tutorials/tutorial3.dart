@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class IntroPage3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      color: Colors.white,
+      //color: Colors.white,
       child: Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height,
@@ -28,7 +30,7 @@ class IntroPage3 extends StatelessWidget {
                 Text("Lighten your spirit by reading motivational quotes. Click Quotes in Dashboard to access the quotes page.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.grey[700],
+                      color: isDarkMode ? Colors.white : Colors.grey[700],
                       fontSize: 15,
                     )
                 )

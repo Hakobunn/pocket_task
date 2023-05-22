@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class IntroPage1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
-      color: Colors.white,
+      //color: Colors.white,
       child: Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height,
@@ -28,7 +30,7 @@ class IntroPage1 extends StatelessWidget {
               Text("Customize contents by adding new tasks to the checklist. Simply click Add at the right side menu to add new tasks.",
                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.grey[700],
+                      color: isDarkMode ? Colors.white : Colors.grey[700],
                       fontSize: 15,
                     )
               )

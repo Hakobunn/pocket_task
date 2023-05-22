@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'constants/colors.dart';
 import 'card/category.dart';
-import 'card/more.dart';
 import 'package:pocket_task/home.dart';
 import 'ui/first_page.dart';
+import 'package:pocket_task/tutorials.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -18,17 +18,17 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
         appBar: AppBar(
         elevation: 0,
-          backgroundColor: Colors.white,),
-      backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,),
+      //backgroundColor: Colors.white,
       body: SafeArea(child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal:20, vertical: 5),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal:20, vertical: 10),
                 child: Row(
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text('Welcome to',
                       style: TextStyle(
                           //fontWeight: FontWeight.bold,
@@ -72,10 +72,10 @@ class _DashboardState extends State<Dashboard> {
                       width: 25,
                     ),
 
-                    Expanded(
+                    const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                               Text('What is your plan for today?',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -101,10 +101,10 @@ class _DashboardState extends State<Dashboard> {
               //const SizedBox(height: 25),
               const SizedBox(height: 30),
               // DISCOVER MORE
-              Padding(padding: const EdgeInsets.symmetric(horizontal: 25),
+              const Padding(padding: EdgeInsets.symmetric(horizontal: 25),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   Text(
                     'Discover More',
                     style: TextStyle(
@@ -129,7 +129,8 @@ class _DashboardState extends State<Dashboard> {
                               // Navigate to another page when the item is clicked
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const FirstPage()),
+                                MaterialPageRoute(builder: (context)
+                                => const FirstPage()),
                               );
                             },
                             child: const CategoryCard(
@@ -147,7 +148,7 @@ class _DashboardState extends State<Dashboard> {
                               );
                             },
                             child: const CategoryCard(
-                              categoryName: 'Quiz',
+                              categoryName: 'Checklists',
                               iconImagePath: 'assets/brain.png',
                             ),
                           ),
@@ -163,11 +164,11 @@ class _DashboardState extends State<Dashboard> {
                               // Navigate to another page when the item is clicked
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Home()),
+                                MaterialPageRoute(builder: (context) => TutorialPage()),
                               );
                             },
                             child: const CategoryCard(
-                              categoryName: 'Games',
+                              categoryName: 'Tutorials',
                               iconImagePath: 'assets/game-console.png',
                             ),
                           ),
@@ -181,7 +182,7 @@ class _DashboardState extends State<Dashboard> {
                               );
                             },
                             child: const CategoryCard(
-                              categoryName: 'Video',
+                              categoryName: 'Notepad',
                               iconImagePath: 'assets/video.png',
                             ),
                           ),

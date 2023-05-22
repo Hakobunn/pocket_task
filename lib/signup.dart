@@ -8,10 +8,10 @@ class SignupPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -52,10 +52,10 @@ class SignupPage extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
-                  inputFile(label: "Username"),
-                  inputFile(label: "Email"),
-                  inputFile(label: "Password", obscureText: true),
-                  inputFile(label: "Confirm Password", obscureText: true),
+                  inputFile(label: "Username",context:context),
+                  inputFile(label: "Email",context:context),
+                  inputFile(label: "Password", obscureText: true,context:context),
+                  inputFile(label: "Confirm Password", obscureText: true,context:context),
                 ],
               ),
               Container(
@@ -114,16 +114,18 @@ class SignupPage extends StatelessWidget {
 }
 
 //creating a widget for text field
-Widget inputFile({label,obscureText=false}) {
+Widget inputFile({label,obscureText=false,required BuildContext context}) {
+  final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       Text(
         label,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w600,
-          color: Colors.black87,
+          color:  isDarkMode? Colors.white : Colors.black87,
         ),
       ),
       const SizedBox(height: 5,),
