@@ -1,34 +1,94 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pocket_task/db/db_helper.dart';
 import 'package:pocket_task/models/task.dart';
 
-class TaskController extends GetxController{
+class TaskController extends GetxController with SingleGetTickerProviderMixin {
+  late TabController tabController;
 
   @override
-  void onReady(){
+  void onInit() {
+    super.onInit();
+    tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() {
+      update();
+    });
+  }
+
+  @override
+  void onClose() {
+    tabController.dispose();
+    super.onClose();
+  }
+
+  var taskList = <Task>[].obs;
+  var todoTasks = <Task>[].obs;
+  var completedTasks = <Task>[].obs;
+
+  @override
+  void onReady() {
     getTasks();
     super.onReady();
   }
 
-  var taskList = <Task>[].obs;
-
   Future<int> addTask({Task? task}) async {
-    return await DBHelper.insert(task);
+    final taskId = await DBHelper.insert(task);
+    getTasks();
+    return taskId;
   }
 
-  //get all data from table
   void getTasks() async {
-    List<Map<String, dynamic>> tasks = await DBHelper.query();
-    taskList.assignAll(tasks.map((data) => new Task.fromJson(data)).toList());
+    final tasks = await DBHelper.query();
+    taskList.assignAll(tasks.map((data) => Task.fromJson(data)).toList());
+    categorizeTasks();
   }
 
-  void delete(Task task){
-    DBHelper.delete(task);
+  void categorizeTasks() {
+    final todo = <Task>[];
+    final completed = <Task>[];
+
+    for (final task in taskList) {
+      if (task.isCompleted == 1) {
+        completed.add(task);
+      } else {
+        todo.add(task);
+      }
+    }
+
+    todoTasks.assignAll(todo);
+    completedTasks.assignAll(completed);
+  }
+
+  void delete(Task task) async {
+    await DBHelper.delete(task);
     getTasks();
   }
 
   void markTaskCompleted(int id) async {
-    await DBHelper.update(id);
+    Task taskToUpdate = taskList.firstWhere((task) => task.id == id);
+    taskToUpdate.isCompleted = 1;
+    await DBHelper.update(taskToUpdate);
     getTasks();
+  }
+
+  void updateTask(Task task) async {
+    await DBHelper.update(task);
+
+    int index = taskList.indexWhere((t) => t.id == task.id);
+    if (index != -1) {
+      taskList[index] = task;
+    }
+
+    index = todoTasks.indexWhere((t) => t.id == task.id);
+    if (index != -1) {
+      todoTasks[index] = task;
+    }
+
+    index = completedTasks.indexWhere((t) => t.id == task.id);
+    if (index != -1) {
+      completedTasks[index] = task;
+    }
+
+    getTasks(); // Refresh the task lists
   }
 }

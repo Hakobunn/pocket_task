@@ -74,7 +74,7 @@ class _FirstPageState extends State<FirstPage> {
                               onTap: (){
                                 _showBottomSheet(context,task);
                               },
-                              child: TaskTile(task)
+                              child: TaskTile(task: task)
                           ),
                         ],
                       ),
@@ -274,7 +274,7 @@ class _FirstPageState extends State<FirstPage> {
           const SizedBox(width: 170),
           Expanded(
             child: Button(label: "+ Add Task", onTap: () async {
-              await Get.to(()=> const AddTaskPage());
+              await Get.to(()=> const AddTaskPage(task: null));
               _taskController.getTasks();
              },
             ),//Get.to(const AddTaskPage())),
@@ -283,5 +283,4 @@ class _FirstPageState extends State<FirstPage> {
       ),
     );
   }
-
 }

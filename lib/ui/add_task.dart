@@ -6,10 +6,12 @@ import 'package:pocket_task/controllers/task_controller.dart';
 import 'package:pocket_task/models/task.dart';
 import 'package:pocket_task/ui/button.dart';
 import 'package:pocket_task/ui/input_field.dart';
-import 'package:pocket_task/controllers/task_controller.dart';
 
 class AddTaskPage extends StatefulWidget {
-  const AddTaskPage({Key? key}) : super(key: key);
+  final Task? task;
+  final bool isEditing;
+
+  const AddTaskPage({Key? key, this.task,this.isEditing = false}) : super(key: key);
 
   @override
   State<AddTaskPage> createState() => _AddTaskPageState();
@@ -121,7 +123,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
      }
    }
 
-   _showNotification(String message) {
+  /* _showNotification(String message) {
      Get.snackbar(
        "Notification",
        message,
@@ -129,7 +131,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
        backgroundColor: Colors.white,
        colorText: tdBlack,
      );
-   }
+   }*/
 
    _addTaskToDb() async {
     int value =await _taskController.addTask(

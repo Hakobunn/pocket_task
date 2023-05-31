@@ -46,6 +46,7 @@ dependencies:
   flutter_native_timezone:
   sqflite:
   flutter_staggered_animations:
+  percent_indicator: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -72,20 +73,15 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   # assets:
   assets:
-    - assets/welcome.png
-    - assets/security.png
     - assets/takingnote.png
     - assets/nerd.png
     - assets/time.png
-    - assets/profile.png
     - assets/task.png
     - assets/brain.png
-    - assets/video.png
-    - assets/game-console.png
-    - assets/headphone.png
-    - assets/calendar.png
     - assets/man.png
     - assets/exam.png
+    - assets/material.png
+    - assets/books.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

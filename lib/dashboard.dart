@@ -3,7 +3,8 @@ import 'constants/colors.dart';
 import 'card/category.dart';
 import 'package:pocket_task/home.dart';
 import 'ui/first_page.dart';
-import 'package:pocket_task/tutorials.dart';
+import 'package:pocket_task/display.dart';
+import 'package:pocket_task/tracker.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
       body: SafeArea(child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal:20, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal:20, vertical: 20),
                 child: Row(
                 children: [
                   Column(
@@ -164,12 +165,12 @@ class _DashboardState extends State<Dashboard> {
                               // Navigate to another page when the item is clicked
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => TutorialPage()),
+                                MaterialPageRoute(builder: (context) => const DisplayPage()),
                               );
                             },
                             child: const CategoryCard(
-                              categoryName: 'Tutorials',
-                              iconImagePath: 'assets/game-console.png',
+                              categoryName: 'Archive',
+                              iconImagePath: 'assets/material.png',
                             ),
                           ),
                           const SizedBox(height: 16),
@@ -178,12 +179,12 @@ class _DashboardState extends State<Dashboard> {
                               // Navigate to another page when the item is clicked
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Home()),
+                                MaterialPageRoute(builder: (context) => const HabitTracker()),
                               );
                             },
                             child: const CategoryCard(
-                              categoryName: 'Notepad',
-                              iconImagePath: 'assets/video.png',
+                              categoryName: 'Resources',
+                              iconImagePath: 'assets/books.png',
                             ),
                           ),
                         ],

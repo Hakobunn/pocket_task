@@ -107,12 +107,6 @@ class _HomeState extends State<Home> {
                   right: 20,
                 ),
                 child: ElevatedButton(
-                  child: Text(
-                    '+',
-                    style: TextStyle(
-                      fontSize: 40,
-                    ),
-                  ),
                   onPressed: () {
                     _addToDoItem(_todoController.text);
                   },
@@ -120,6 +114,12 @@ class _HomeState extends State<Home> {
                     primary: tdNavyBlue,
                     minimumSize: const Size(60, 60),
                     elevation: 10,
+                  ),
+                  child: const Text(
+                    '+',
+                    style: TextStyle(
+                      fontSize: 40,
+                    ),
                   ),
                 ),
               ),
