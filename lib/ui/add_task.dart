@@ -35,6 +35,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   @override
   Widget build(BuildContext context) {
+    _titleController.text = widget.task?.title ?? "";
+    _noteController.text = widget.task?.note ?? "";
     return Scaffold(
       resizeToAvoidBottomInset: false,
       //backgroundColor: Colors.white,
@@ -91,7 +93,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 child: SizedBox(
                   width: 150, // Adjust the width value as per your requirement
                   child: Button(
-                    label: "Create Task",
+                      label: widget.isEditing ? "Save" : "Create Task",
                     onTap: ()=> _validateTask()),
                   ),
                 ),
@@ -104,13 +106,32 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
    _validateTask() {
      if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
-       // Add code to save the task to the database
-       _addTaskToDb();
-       // Show success notification
-       //_showNotification("Task created successfully");
+       if (widget.isEditing) {
+         // Update the existing task
+         Task updatedTask = Task(
+           id: widget.task!.id,
+           title: _titleController.text,
+           note: _noteController.text,
+           date: DateFormat.yMd().format(_selectedDate),
+           color: _selectedColor,
+           isCompleted: widget.task!.isCompleted,
+         );
+         _taskController.updateTask(updatedTask);
+       } else {
+         // Create a new task
+         Task newTask = Task(
+           title: _titleController.text,
+           note: _noteController.text,
+           date: DateFormat.yMd().format(_selectedDate),
+           color: _selectedColor,
+           isCompleted: 0,
+         );
+         _taskController.addTask(task: newTask);
+       }
 
-       // Navigate back
-       Get.back();
+       // Navigate back to the TaskTile page
+       Navigator.pop(context);
+
      } else {
        Get.snackbar(
          "Required",
